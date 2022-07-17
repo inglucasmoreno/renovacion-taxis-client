@@ -1,0 +1,36 @@
+<app-modal [showModal]="showModal">
+    <div class="p-4">
+        <div class="flex items-center justify-between">
+            <h1 class="font-semibold text-xl"> Datos de licencia </h1>
+            <button class="focus:outline-none" (click)="showModal = false">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <div class="mt-3 text-sm">
+            <p> <span class="font-semibold"> Número de licencia: </span> {{ nro_licencia }} </p>
+            <p *ngIf="!titular" class="mt-3"> <span class="font-semibold"> Titular: </span>  No se encontro el titular </p>
+            <p *ngIf="titular" class="mt-3"> <span class="font-semibold"> Titular: </span>  {{ titular?.nombre.toUpperCase() }} - {{ titular?.tipo_identificacion }} {{ titular?.identificacion }} </p>
+            <p *ngIf="!permisionario" class="mt-3"> <span class="font-semibold"> Permisionario: </span>  No se encontro el permisionario </p>
+            <p *ngIf="permisionario"> <span class="font-semibold"> Permisionario: </span>  {{ permisionario?.nombre.toUpperCase() }} - {{ permisionario?.tipo_identificacion }} {{ permisionario?.identificacion }} </p>
+            <p class="font-semibold mt-3"> Choferes </p>
+            <div *ngIf="choferes.length > 0">
+                <p *ngFor="let chofer of choferes let i = index"> {{ i + 1 }} - {{ chofer?.nombre.toUpperCase() }} - {{ chofer?.tipo_identificacion }} {{ chofer?.identificacion }} </p>
+            </div>
+            <p *ngIf="choferes.length <= 0" class="mt-3"> No se encontraron choferes </p>
+            <button class="bg-primary-800 text-white w-full rounded border p-2 mt-5 focus:outline-none hover:bg-secondaryColor transform duration-200"> Generar renovación </button>
+        </div>
+    </div>
+
+</app-modal>
+<div class="mx-auto gsap-contenido mt-10">
+    <div class="mt-3">
+        <div class="text-center">
+            <h1 class="text-5xl text-center"> Renovación de taxis </h1>
+            <img src="assets/img/renovacion/renovacion.svg" class="text-center mx-auto w-32 mt-8" alt="">
+            <input (keyup.enter)="generarDocumento()" [(ngModel)]="licencia" type="text" class="border block text-center mx-auto border-gray-400 rounded p-2 shadow w-64 mt-5 focus:outline-none" placeholder="Ingresar licencia">
+            <button (click)="generarDocumento()" class="border border-gray-300 mt-6 bg-primary-800 hover:bg-secondaryColor hover:border-secondaryColor transform duration-300 focus:outline-none ml-2 text-white p-2 shadow rounded"> Buscar licencia </button>
+        </div>
+    </div>
+</div>

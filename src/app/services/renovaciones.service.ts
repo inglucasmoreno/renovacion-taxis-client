@@ -13,6 +13,16 @@ export class RenovacionesService {
   constructor(private http: HttpClient) { }
 
   // Obtener datos de licencia
+  generarDocumento(licencia: string): Observable<any>{
+    return this.http.get(`${base_url}/taxis/licencia/documento/${licencia}`, {
+      headers: {
+        'Authorization': localStorage.getItem('token')
+      }
+    })
+  
+  } 
+
+  // Obtener datos de licencia
   getLicencia(licencia: string): Observable<any>{
 
     const data = { licencia }

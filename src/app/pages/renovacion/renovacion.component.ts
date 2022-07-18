@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import gsap from 'gsap';
 import { DataService } from 'src/app/services/data.service';
 import { RenovacionesService } from 'src/app/services/renovaciones.service';
+import { environment } from 'src/environments/environment';
 import { AlertService } from '../../services/alert.service';
+
+const base_url = environment.base_url;
 
 @Component({
   selector: 'app-renovacion',
@@ -22,6 +26,7 @@ export class RenovacionComponent implements OnInit {
 
   constructor(private renovacionesService: RenovacionesService,
               private dataService: DataService,
+              private router: Router,
               private alertService: AlertService) { }
 
   ngOnInit(): void {
@@ -30,6 +35,18 @@ export class RenovacionComponent implements OnInit {
   }
 
   generarDocumento(): void {
+    this.alertService.loading();
+    this.renovacionesService.generarDocumento(this.nro_licencia).subscribe({
+      next: () => {
+        this.showModal = false;
+        this.alertService.close();
+        window.open(`${base_url}/pdf/documento_taxi.pdf`, '_blank');  
+      },
+      error: ({error}) => this.alertService.errorApi(error.message)
+    })
+  }
+
+  obtenerDatos(): void {
 
     if(!this.licencia || this.licencia.trim() === ''){
       this.alertService.info('Debe colocar un número de licencia');
@@ -38,7 +55,6 @@ export class RenovacionComponent implements OnInit {
 
     this.renovacionesService.getLicencia(this.licencia).subscribe({
       next: ({licencia}) => {
-        console.log(licencia);
         const personas: any[] = licencia.datos;
         this.reiniciarFormulario();
         this.showModal = true;

@@ -8,7 +8,7 @@
                 </svg>
             </button>
         </div>
-        <div class="mt-3 text-sm">
+        <div class="mt-3 text-xs md:text-sm">
             <p> <span class="font-semibold"> Número de licencia: </span> {{ nro_licencia }} </p>
             <p *ngIf="!titular" class="mt-3"> <span class="font-semibold"> Titular: </span>  No se encontro el titular </p>
             <p *ngIf="titular" class="mt-3"> <span class="font-semibold"> Titular: </span>  {{ titular?.nombre.toUpperCase() }} - {{ titular?.tipo_identificacion }} {{ titular?.identificacion }} </p>
@@ -19,7 +19,7 @@
                 <p *ngFor="let chofer of choferes let i = index"> {{ i + 1 }} - {{ chofer?.nombre.toUpperCase() }} - {{ chofer?.tipo_identificacion }} {{ chofer?.identificacion }} </p>
             </div>
             <p *ngIf="choferes.length <= 0" class="mt-3"> No se encontraron choferes </p>
-            <button class="bg-primary-800 text-white w-full rounded border p-2 mt-5 focus:outline-none hover:bg-secondaryColor transform duration-200"> Generar renovación </button>
+            <button (click)="generarDocumento()" class="bg-primary-800 text-white w-full rounded border p-2 mt-5 focus:outline-none hover:bg-secondaryColor transform duration-200"> Generar renovación </button>
         </div>
     </div>
 
@@ -27,10 +27,10 @@
 <div class="mx-auto gsap-contenido mt-10">
     <div class="mt-3">
         <div class="text-center">
-            <h1 class="text-5xl text-center"> Renovación de taxis </h1>
+            <h1 class="text-3xl md:text-5xl text-center"> Renovación de taxis </h1>
             <img src="assets/img/renovacion/renovacion.svg" class="text-center mx-auto w-32 mt-8" alt="">
-            <input (keyup.enter)="generarDocumento()" [(ngModel)]="licencia" type="text" class="border block text-center mx-auto border-gray-400 rounded p-2 shadow w-64 mt-5 focus:outline-none" placeholder="Ingresar licencia">
-            <button (click)="generarDocumento()" class="border border-gray-300 mt-6 bg-primary-800 hover:bg-secondaryColor hover:border-secondaryColor transform duration-300 focus:outline-none ml-2 text-white p-2 shadow rounded"> Buscar licencia </button>
+            <input (keyup.enter)="obtenerDatos()" [(ngModel)]="licencia" type="text" class="border block text-center mx-auto border-gray-400 rounded p-2 shadow w-64 mt-5 focus:outline-none" placeholder="Ingresar licencia">
+            <button (click)="obtenerDatos()" class="border border-gray-300 mt-6 bg-primary-800 hover:bg-secondaryColor hover:border-secondaryColor transform duration-300 focus:outline-none ml-2 text-white p-2 shadow rounded"> Buscar licencia </button>
         </div>
     </div>
 </div>

@@ -26,7 +26,6 @@ export class RenovacionComponent implements OnInit {
 
   constructor(private renovacionesService: RenovacionesService,
               private dataService: DataService,
-              private router: Router,
               private alertService: AlertService) { }
 
   ngOnInit(): void {
@@ -53,11 +52,14 @@ export class RenovacionComponent implements OnInit {
       return;
     }
 
+    this.alertService.loading();
+
     this.renovacionesService.getLicencia(this.licencia).subscribe({
       next: ({licencia}) => {
         const personas: any[] = licencia.datos;
         this.reiniciarFormulario();
         this.showModal = true;
+        this.alertService.close();
         this.nro_licencia = licencia.nro_licencia;
         personas.map( persona => {
           const {tipo_persona} = persona;

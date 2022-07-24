@@ -19,7 +19,7 @@ export class NuevoUsuarioComponent implements OnInit {
   // Permisos
   public permisos = {
     usuarios: 'USUARIOS_NOT_ACCESS',
-    productos: 'PRODUCTOS_NOT_ACCESS'
+    renovacion: 'RENOVACION_ALL'
   };
 
   // Modelo reactivo
@@ -112,13 +112,12 @@ export class NuevoUsuarioComponent implements OnInit {
       permisos.push('USUARIOS_NAV');
       permisos.push(this.permisos.usuarios);
     }
-    
-    // Seccion productos
-    // if(this.permisos.productos !== 'PRODUCTOS_NOT_ACCESS'){
-    //   permisos.push('PRODUCTOS_NAV');
-    //   permisos.push(this.permisos.productos);
-    // }
-    
+
+    if(this.permisos.renovacion !== 'RENOVACION_NOT_ACCESS'){
+      permisos.push('RENOVACION_NAV');
+      permisos.push(this.permisos.renovacion);
+    }
+
     return permisos;  
   
   }

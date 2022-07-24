@@ -20,7 +20,7 @@ export class EditarUsuarioComponent implements OnInit {
   // Permisos
   public permisos = {
     usuarios: 'USUARIOS_NOT_ACCESS',
-    productos: 'PRODUCTOS_NOT_ACCESS'
+    renovacion: 'RENOVACION_ALL'
   };
 
   public id: string;
@@ -94,8 +94,8 @@ export class EditarUsuarioComponent implements OnInit {
       // Usuarios
       (permiso === 'USUARIOS_ALL' || permiso === 'USUARIOS_READ') ? this.permisos.usuarios = permiso : null;
 
-      // Productos
-      (permiso === 'PRODUCTOS_ALL' || permiso === "PRODUCTOS_READ") ? this.permisos.productos = permiso : null;
+      // Renovacion
+      (permiso === 'RENOVACION_ALL' || permiso === "RENOVACION_READ") ? this.permisos.renovacion = permiso : null;
     
     });
 
@@ -122,8 +122,8 @@ export class EditarUsuarioComponent implements OnInit {
     // Se agregan los permisos
     let data: any = this.usuarioForm.value;
 
-    if(role !== 'ADMIN_ROLE') data.permisos = this.adicionarPermisos(); // Se adicionan los permisos a la data para actualizacion
-    else data.permisos = [];
+    // if(role !== 'ADMIN_ROLE') data.permisos = this.adicionarPermisos(); // Se adicionan los permisos a la data para actualizacion
+    // else data.permisos = [];
 
     this.alertService.loading();
 
@@ -149,11 +149,11 @@ export class EditarUsuarioComponent implements OnInit {
       permisos.push(this.permisos.usuarios);
     }
     
-    // Seccion productos
-    // if(this.permisos.productos !== 'PRODUCTOS_NOT_ACCESS'){
-    //   permisos.push('PRODUCTOS_NAV');
-    //   permisos.push(this.permisos.productos);
-    // }
+    // Seccion renovacion
+    if(this.permisos.renovacion !== 'RENOVACION_NOT_ACCESS'){
+      permisos.push('RENOVACION_NAV');
+      permisos.push(this.permisos.renovacion);
+    }
     
     return permisos;  
   

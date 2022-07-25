@@ -1,7 +1,7 @@
 <app-modal [showModal]="showModal">
     <div class="p-4">
         <div class="flex items-center justify-between">
-            <h1 class="font-semibold text-xl"> Datos de licencia </h1>
+            <h1 class="font-semibold text-xl"> Datos de tarjeta </h1>
             <button class="focus:outline-none" (click)="showModal = false">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -9,17 +9,37 @@
             </button>
         </div>
         <div class="mt-3 text-xs md:text-sm">
-            <p> <span class="font-semibold"> Número de licencia: </span> {{ nro_licencia }} </p>
-            <p *ngIf="!titular" class="mt-3"> <span class="font-semibold"> Titular: </span>  No se encontro el titular </p>
-            <p *ngIf="titular" class="mt-3"> <span class="font-semibold"> Titular: </span>  {{ titular?.nombre.toUpperCase() }} - {{ titular?.tipo_identificacion }} {{ titular?.identificacion }} </p>
-            <p *ngIf="!permisionario" class="mt-3"> <span class="font-semibold"> Permisionario: </span>  No se encontro el permisionario </p>
-            <p *ngIf="permisionario"> <span class="font-semibold"> Permisionario: </span>  {{ permisionario?.nombre.toUpperCase() }} - {{ permisionario?.tipo_identificacion }} {{ permisionario?.identificacion }} </p>
-            <p class="font-semibold mt-3"> Choferes </p>
+            
+            <p class="text-lg">  LICENCIA DE TAXI N° <span class="font-semibold"> {{ nro_licencia }} </span> </p>
+          
+            <p class="font-semibold p-1 my-2 bg-gray-100 rounded border border-gray-300"> Datos de vehículo </p>
+
+            <!-- Datos de vehiculo - Marca y modelo -->
+            <p *ngIf="!vehiculo?.dominio" class="mt-3 mb-2"> <span class="font-semibold"> - Marca: </span>  No se encontro la marca del vehiculo </p>
+            <p *ngIf="vehiculo?.dominio" class="mt-3 mb-2"> <span class="font-semibold"> - Marca: </span> {{ vehiculo.marca }} </p>
+            
+            <!-- Datos de vehiculo - Dominio -->
+            <p *ngIf="!vehiculo?.dominio" class="mt-3"> <span class="font-semibold"> - Dominio: </span>  No se encontro el dominio </p>
+            <p *ngIf="vehiculo?.dominio"> <span class="font-semibold"> - Dominio: </span> {{ vehiculo.dominio }} </p>
+
+            <p class="font-semibold p-1 my-2 bg-gray-100 rounded border border-gray-300"> Datos de personas </p>
+
+            <!-- Datos de titular -->
+            <p *ngIf="!titular" class="mt-3 mb-2"> <span class="font-semibold"> - Titular: </span>  No se encontro el titular </p>
+            <p *ngIf="titular" class="mt-3 mb-2"> <span class="font-semibold"> - Titular: </span>  {{ titular?.nombre.toUpperCase() }} - {{ titular?.tipo_identificacion }} {{ titular?.identificacion }} </p>
+            
+            <!-- Datos de permisionario -->
+            <p *ngIf="!permisionario" class="mt-3 mb-2"> <span class="font-semibold"> - Permisionario: </span>  No se encontro el permisionario </p>
+            <p *ngIf="permisionario" class="mt-3 mb-2"> <span class="font-semibold"> - Permisionario: </span>  {{ permisionario?.nombre.toUpperCase() }} - {{ permisionario?.tipo_identificacion }} {{ permisionario?.identificacion }} </p>    
+        
+            <p class="font-semibold mt-4 mb-2"> Choferes </p>
+            
             <div *ngIf="choferes.length > 0">
                 <p *ngFor="let chofer of choferes let i = index"> {{ i + 1 }} - {{ chofer?.nombre.toUpperCase() }} - {{ chofer?.tipo_identificacion }} {{ chofer?.identificacion }} </p>
             </div>
-            <p *ngIf="choferes.length <= 0" class="mt-3"> No se encontraron choferes </p>
-            <button (click)="generarDocumento()" class="bg-primary-800 text-white w-full rounded border p-2 mt-5 focus:outline-none hover:bg-secondaryColor transform duration-200"> Generar renovación </button>
+            
+            <p *ngIf="choferes.length <= 0" class="mt-4"> No se encontraron choferes </p>
+            <button (click)="generarTarjeta()" class="bg-primary-800 text-white w-full rounded border p-2 mt-5 focus:outline-none hover:bg-secondaryColor transform duration-200"> Generar tarjeta </button>
         </div>
     </div>
 

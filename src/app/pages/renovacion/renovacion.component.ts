@@ -19,6 +19,7 @@ export class RenovacionComponent implements OnInit {
   public showModal = false;
 
   public nro_licencia: string;
+  public vehiculo: any;
   public licencia: string;
   public permisionario: any;
   public titular: any;
@@ -33,9 +34,18 @@ export class RenovacionComponent implements OnInit {
     gsap.from('.gsap-contenido', { y:100, opacity: 0, duration: .2 });
   }
 
-  generarDocumento(): void {
+  generarTarjeta(): void {
     this.alertService.loading();
-    this.renovacionesService.generarDocumento(this.nro_licencia).subscribe({
+
+    const data = {
+      nro_licencia: this.nro_licencia,
+      vehiculo: this.vehiculo,
+      permisionario: this.permisionario,
+      titular: this.titular,
+      choferes: this.choferes
+    };
+
+    this.renovacionesService.generarTarjeta(data).subscribe({
       next: () => {
         this.showModal = false;
         this.alertService.close();
@@ -56,6 +66,7 @@ export class RenovacionComponent implements OnInit {
 
     this.renovacionesService.getLicencia(this.licencia).subscribe({
       next: ({licencia}) => {
+        this.vehiculo = licencia.vehiculo;
         const personas: any[] = licencia.datos;
         this.reiniciarFormulario();
         this.showModal = true;
